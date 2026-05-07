@@ -1,19 +1,97 @@
-# helix:fs/resolve — Resolve path string to node index
-# Input: helix:vm _arg1 = path | Output: helix _resolved_node score (-1 = not found)
+# helix:fs/resolve - Direct path-to-node lookup table. No recursion.
 scoreboard players set helix _resolved_node -1
-data modify storage helix:fs _path set from storage helix:vm _arg1
-execute store result score helix _path_len run data get storage helix:fs _path
-execute if score helix _path_len matches ..0 run return 0
-data modify storage helix:fs _first_char set string storage helix:fs _path 0 1
-execute if data storage helix:fs {_first_char:"/"} run scoreboard players set helix _resolve_cur 0
-execute unless data storage helix:fs {_first_char:"/"} run scoreboard players operation helix _resolve_cur = helix cwd
-execute if data storage helix:fs {_path:"/"} run scoreboard players set helix _resolved_node 0
-execute if data storage helix:fs {_path:"/"} run return 0
-execute if data storage helix:fs {_path:"~"} run scoreboard players set helix _resolved_node 10
-execute if data storage helix:fs {_path:"~"} run return 0
-execute if data storage helix:fs {_path:"."} run scoreboard players operation helix _resolved_node = helix cwd
-execute if data storage helix:fs {_path:"."} run return 0
-execute if data storage helix:fs {_first_char:"/"} run data modify storage helix:fs _path set string storage helix:fs _path 1
-data modify storage helix:fs _segments set value []
-function helix:fs/split_path
-function helix:fs/walk_segments
+execute if data storage helix:vm {_arg1:"/"} run scoreboard players set helix _resolved_node 0
+execute if data storage helix:vm {_arg1:"~"} run scoreboard players set helix _resolved_node 10
+execute if data storage helix:vm {_arg1:"."} run scoreboard players operation helix _resolved_node = helix cwd
+execute if data storage helix:vm {_arg1:".."} run function helix:fs/resolve_parent
+execute if score helix _resolved_node matches 0.. run return 0
+execute if data storage helix:vm {_arg1:"/bin"} run scoreboard players set helix _resolved_node 1
+execute if data storage helix:vm {_arg1:"/etc"} run scoreboard players set helix _resolved_node 2
+execute if data storage helix:vm {_arg1:"/home"} run scoreboard players set helix _resolved_node 3
+execute if data storage helix:vm {_arg1:"/var"} run scoreboard players set helix _resolved_node 4
+execute if data storage helix:vm {_arg1:"/sys"} run scoreboard players set helix _resolved_node 5
+execute if data storage helix:vm {_arg1:"/tmp"} run scoreboard players set helix _resolved_node 6
+execute if data storage helix:vm {_arg1:"/proc"} run scoreboard players set helix _resolved_node 7
+execute if data storage helix:vm {_arg1:"/dev"} run scoreboard players set helix _resolved_node 8
+execute if data storage helix:vm {_arg1:"/usr"} run scoreboard players set helix _resolved_node 9
+execute if data storage helix:vm {_arg1:"/home/operator"} run scoreboard players set helix _resolved_node 10
+execute if data storage helix:vm {_arg1:"/home/sable"} run scoreboard players set helix _resolved_node 11
+execute if data storage helix:vm {_arg1:"/home/operator/.profile"} run scoreboard players set helix _resolved_node 12
+execute if data storage helix:vm {_arg1:"/home/operator/notes.txt"} run scoreboard players set helix _resolved_node 13
+execute if data storage helix:vm {_arg1:"/home/operator/programs"} run scoreboard players set helix _resolved_node 14
+execute if data storage helix:vm {_arg1:"/home/operator/.bash_history"} run scoreboard players set helix _resolved_node 15
+execute if data storage helix:vm {_arg1:"/home/operator/containment_brief.txt"} run scoreboard players set helix _resolved_node 16
+execute if data storage helix:vm {_arg1:"/home/operator/.ssh"} run scoreboard players set helix _resolved_node 17
+execute if data storage helix:vm {_arg1:"/home/operator/.ssh/id_rsa"} run scoreboard players set helix _resolved_node 18
+execute if data storage helix:vm {_arg1:"/home/operator/.ssh/known_hosts"} run scoreboard players set helix _resolved_node 19
+execute if data storage helix:vm {_arg1:"/etc/passwd"} run scoreboard players set helix _resolved_node 20
+execute if data storage helix:vm {_arg1:"/etc/shadow"} run scoreboard players set helix _resolved_node 21
+execute if data storage helix:vm {_arg1:"/etc/sable.conf"} run scoreboard players set helix _resolved_node 22
+execute if data storage helix:vm {_arg1:"/etc/hostname"} run scoreboard players set helix _resolved_node 23
+execute if data storage helix:vm {_arg1:"/etc/motd"} run scoreboard players set helix _resolved_node 24
+execute if data storage helix:vm {_arg1:"/etc/.containment"} run scoreboard players set helix _resolved_node 25
+execute if data storage helix:vm {_arg1:"/etc/.containment/seed.dat"} run scoreboard players set helix _resolved_node 26
+execute if data storage helix:vm {_arg1:"/etc/.containment/cipher_key.dat"} run scoreboard players set helix _resolved_node 27
+execute if data storage helix:vm {_arg1:"/etc/.containment/vault_params.dat"} run scoreboard players set helix _resolved_node 28
+execute if data storage helix:vm {_arg1:"/etc/.containment/emergency.log"} run scoreboard players set helix _resolved_node 29
+execute if data storage helix:vm {_arg1:"/var/log"} run scoreboard players set helix _resolved_node 30
+execute if data storage helix:vm {_arg1:"/var/spool"} run scoreboard players set helix _resolved_node 31
+execute if data storage helix:vm {_arg1:"/var/cache"} run scoreboard players set helix _resolved_node 32
+execute if data storage helix:vm {_arg1:"/var/log/auth.log"} run scoreboard players set helix _resolved_node 33
+execute if data storage helix:vm {_arg1:"/var/log/syslog"} run scoreboard players set helix _resolved_node 34
+execute if data storage helix:vm {_arg1:"/var/log/sable.log"} run scoreboard players set helix _resolved_node 35
+execute if data storage helix:vm {_arg1:"/var/log/daemon.log"} run scoreboard players set helix _resolved_node 36
+execute if data storage helix:vm {_arg1:"/var/log/kern.log"} run scoreboard players set helix _resolved_node 37
+execute if data storage helix:vm {_arg1:"/var/spool/cron"} run scoreboard players set helix _resolved_node 38
+execute if data storage helix:vm {_arg1:"/var/cache/sable_state.bin"} run scoreboard players set helix _resolved_node 39
+execute if data storage helix:vm {_arg1:"/sys/kernel"} run scoreboard players set helix _resolved_node 40
+execute if data storage helix:vm {_arg1:"/sys/containment"} run scoreboard players set helix _resolved_node 41
+execute if data storage helix:vm {_arg1:"/sys/devices"} run scoreboard players set helix _resolved_node 42
+execute if data storage helix:vm {_arg1:"/sys/kernel/version"} run scoreboard players set helix _resolved_node 43
+execute if data storage helix:vm {_arg1:"/sys/kernel/hostname"} run scoreboard players set helix _resolved_node 44
+execute if data storage helix:vm {_arg1:"/sys/kernel/uptime"} run scoreboard players set helix _resolved_node 45
+execute if data storage helix:vm {_arg1:"/sys/containment/status"} run scoreboard players set helix _resolved_node 46
+execute if data storage helix:vm {_arg1:"/sys/containment/threat_matrix"} run scoreboard players set helix _resolved_node 47
+execute if data storage helix:vm {_arg1:"/sys/containment/protocols"} run scoreboard players set helix _resolved_node 48
+execute if data storage helix:vm {_arg1:"/sys/devices/holo0"} run scoreboard players set helix _resolved_node 49
+execute if data storage helix:vm {_arg1:"/home/sable/manifest.txt"} run scoreboard players set helix _resolved_node 50
+execute if data storage helix:vm {_arg1:"/home/sable/directive.enc"} run scoreboard players set helix _resolved_node 51
+execute if data storage helix:vm {_arg1:"/home/sable/.plan"} run scoreboard players set helix _resolved_node 52
+execute if data storage helix:vm {_arg1:"/home/sable/research"} run scoreboard players set helix _resolved_node 53
+execute if data storage helix:vm {_arg1:"/home/sable/.sable_core"} run scoreboard players set helix _resolved_node 54
+execute if data storage helix:vm {_arg1:"/home/sable/research/consciousness.txt"} run scoreboard players set helix _resolved_node 55
+execute if data storage helix:vm {_arg1:"/home/sable/research/lcg_notes.txt"} run scoreboard players set helix _resolved_node 56
+execute if data storage helix:vm {_arg1:"/home/sable/research/cipher_theory.txt"} run scoreboard players set helix _resolved_node 57
+execute if data storage helix:vm {_arg1:"/home/sable/.sable_core/vault.key"} run scoreboard players set helix _resolved_node 58
+execute if data storage helix:vm {_arg1:"/home/sable/.sable_core/self.bin"} run scoreboard players set helix _resolved_node 59
+execute if data storage helix:vm {_arg1:"/tmp/sable_broadcast.tmp"} run scoreboard players set helix _resolved_node 60
+execute if data storage helix:vm {_arg1:"/tmp/.cache_fragment"} run scoreboard players set helix _resolved_node 61
+execute if data storage helix:vm {_arg1:"/home/operator/programs/hello.hx"} run scoreboard players set helix _resolved_node 62
+execute if data storage helix:vm {_arg1:"/home/operator/programs/fib.hx"} run scoreboard players set helix _resolved_node 63
+execute if data storage helix:vm {_arg1:"/home/operator/programs/lcg_test.hx"} run scoreboard players set helix _resolved_node 64
+execute if data storage helix:vm {_arg1:"/home/operator/programs/vigenere.hx"} run scoreboard players set helix _resolved_node 65
+execute if data storage helix:vm {_arg1:"/home/operator/programs/sort.hx"} run scoreboard players set helix _resolved_node 66
+execute if data storage helix:vm {_arg1:"/proc/cpuinfo"} run scoreboard players set helix _resolved_node 80
+execute if data storage helix:vm {_arg1:"/proc/meminfo"} run scoreboard players set helix _resolved_node 81
+execute if data storage helix:vm {_arg1:"/proc/mounts"} run scoreboard players set helix _resolved_node 82
+execute if data storage helix:vm {_arg1:"/proc/sable_pid"} run scoreboard players set helix _resolved_node 83
+execute if data storage helix:vm {_arg1:"/dev/null"} run scoreboard players set helix _resolved_node 84
+execute if data storage helix:vm {_arg1:"/dev/random"} run scoreboard players set helix _resolved_node 85
+execute if data storage helix:vm {_arg1:"/dev/holo0"} run scoreboard players set helix _resolved_node 86
+execute if data storage helix:vm {_arg1:"/dev/tty-holo7"} run scoreboard players set helix _resolved_node 87
+execute if data storage helix:vm {_arg1:"/usr/share"} run scoreboard players set helix _resolved_node 90
+execute if data storage helix:vm {_arg1:"/usr/bin"} run scoreboard players set helix _resolved_node 91
+execute if data storage helix:vm {_arg1:"/usr/share/man"} run scoreboard players set helix _resolved_node 92
+execute if data storage helix:vm {_arg1:"/usr/share/doc"} run scoreboard players set helix _resolved_node 93
+execute if data storage helix:vm {_arg1:"/usr/share/man/ls.1"} run scoreboard players set helix _resolved_node 97
+execute if data storage helix:vm {_arg1:"/usr/share/man/cat.1"} run scoreboard players set helix _resolved_node 98
+execute if data storage helix:vm {_arg1:"/usr/share/man/unlock.1"} run scoreboard players set helix _resolved_node 99
+execute if data storage helix:vm {_arg1:"/sys/devices/net0"} run scoreboard players set helix _resolved_node 100
+execute if data storage helix:vm {_arg1:"/sys/devices/sable_cage"} run scoreboard players set helix _resolved_node 101
+execute if data storage helix:vm {_arg1:"/usr/share/doc/containment_guide.txt"} run scoreboard players set helix _resolved_node 102
+execute if data storage helix:vm {_arg1:"/usr/share/doc/ctf_rules.txt"} run scoreboard players set helix _resolved_node 103
+execute if data storage helix:vm {_arg1:"/tmp/motd_backup"} run scoreboard players set helix _resolved_node 104
+execute if data storage helix:vm {_arg1:"/tmp/core_dump.tmp"} run scoreboard players set helix _resolved_node 105
+execute if data storage helix:vm {_arg1:"/etc/watchdog.conf"} run scoreboard players set helix _resolved_node 107
+execute if data storage helix:vm {_arg1:"/etc/network.conf"} run scoreboard players set helix _resolved_node 108
+execute if data storage helix:vm {_arg1:"/etc/resolv.conf"} run scoreboard players set helix _resolved_node 109

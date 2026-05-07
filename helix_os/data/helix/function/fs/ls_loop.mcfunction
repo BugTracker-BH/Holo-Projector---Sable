@@ -1,5 +1,7 @@
-# helix:fs/ls_loop - Iterate children, build output string
+# helix:fs/ls_loop - Iterate children, build output string (bounded to 20 max)
 execute if score helix _ls_i >= helix _ls_count run return 0
+scoreboard players set helix _tmp2 20
+execute if score helix _ls_i >= helix _tmp2 run return 0
 execute store result storage helix:fs _ls_ci int 1 run scoreboard players get helix _ls_i
 function helix:fs/ls_get_child with storage helix:fs
 execute store result storage helix:fs _ls_ni int 1 run scoreboard players get helix _ls_child_id
