@@ -1,1 +1,1 @@
-{ "values": ["holo:load", "helix:load", "helix_term:load"] }
+{"values":["helix_term:load"]}

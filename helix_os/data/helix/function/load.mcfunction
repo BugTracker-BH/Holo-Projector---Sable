@@ -39,7 +39,7 @@ data modify storage helix:vm src set value ""
 data modify storage helix:vm tokens set value []
 data modify storage helix:vm code set value []
 data modify storage helix:vm stack set value []
-data modify storage helix:vm frames set value [{locals:{},ret_addr:-1}]
+data modify storage helix:vm frames set value []
 data modify storage helix:vm arrays set value []
 data modify storage helix:vm structs set value []
 data modify storage helix:vm error set value ""
@@ -52,10 +52,30 @@ data modify storage helix:shell cwd_node set value 10
 data modify storage helix:shell prompt_path set value "~"
 data modify storage helix:shell msg set value ""
 data modify storage helix:shell color set value "GREEN"
-data modify storage helix:shell env set value {PATH:"/bin:/usr/bin",HOME:"/home/operator",USER:"operator",SHELL:"/bin/hsh",TERM:"holo-256color",LANG:"en_US.UTF-8",SABLE_STATUS:"CONTAINED",THREAT_LEVEL:"CRITICAL",CONTAINMENT_LEVEL:"3"}
-data modify storage helix:shell aliases set value {ll:"lsa",la:"lsa",cls:"clear",h:"history"}
+data modify storage helix:shell env set value {}
+data modify storage helix:shell env.PATH set value "/bin:/usr/bin"
+data modify storage helix:shell env.HOME set value "/home/operator"
+data modify storage helix:shell env.USER set value "operator"
+data modify storage helix:shell env.SHELL set value "/bin/hsh"
+data modify storage helix:shell env.TERM set value "holo-256color"
+data modify storage helix:shell env.SABLE_STATUS set value "CONTAINED"
+data modify storage helix:shell env.THREAT_LEVEL set value "CRITICAL"
+data modify storage helix:shell aliases set value {}
+data modify storage helix:shell aliases.ll set value "lsa"
+data modify storage helix:shell aliases.cls set value "clear"
+data modify storage helix:shell aliases.h set value "history"
 
-data modify storage helix:ctf set value {stage1_proven:0,easy_key_proven:0,solved_easy:0,conf_unlocked:0,medium_cipher_proven:0,solved_medium:0,vault_proven:0,solved_hard:0,sable_breached:0}
+data modify storage helix:ctf stage1_proven set value 0
+data modify storage helix:ctf easy_key_proven set value 0
+data modify storage helix:ctf solved_easy set value 0
+data modify storage helix:ctf conf_unlocked set value 0
+data modify storage helix:ctf medium_cipher_proven set value 0
+data modify storage helix:ctf solved_medium set value 0
+data modify storage helix:ctf vault_proven set value 0
+data modify storage helix:ctf solved_hard set value 0
+data modify storage helix:ctf sable_breached set value 0
+data modify storage helix:ctf sys_r3ad_unlocked set value 0
+data modify storage helix:ctf conf_k3y_unlocked set value 0
 
 data modify storage helix:reveal buf set value ""
 data modify storage helix:reveal ch set value ""
