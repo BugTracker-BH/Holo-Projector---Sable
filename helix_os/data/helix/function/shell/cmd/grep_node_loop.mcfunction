@@ -1,4 +1,4 @@
-# helix:shell/cmd/grep_node_loop - Iterate file nodes, search content
+# helix:shell/cmd/grep_node_loop - Iterate nodes for grep
 execute if score helix _grep_i >= helix _grep_total run return 0
 execute if score helix _grep_hits matches 5.. run return 0
 execute store result storage helix:fs _gi int 1 run scoreboard players get helix _grep_i

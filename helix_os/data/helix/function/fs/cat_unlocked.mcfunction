@@ -1,2 +1,2 @@
 $data modify storage helix:fs _cat_content set from storage helix:fs nodes[$(_cat_ci)].content
-$function helix:fs/cat_display with storage helix:fs
+$execute if data storage helix:fs nodes[$(_cat_ci)] run function helix:fs/cat_display with storage helix:fs
