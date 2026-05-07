@@ -1,4 +1,4 @@
-# HELIX OS — Roadmap
+# HELIX OS - Roadmap
 
 ## Current State (Complete)
 

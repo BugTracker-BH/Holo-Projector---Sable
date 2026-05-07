@@ -1,6 +1,6 @@
-# HELIX OS — Rogue AI Containment Terminal
+# HELIX OS - Rogue AI Containment Terminal
 
-A three-datapack Minecraft Java Edition system (26.1.2) that builds a fully interactive holographic computer terminal in-game: a 128×72 pixel display, a real operating system with 110-node filesystem, 33 shell commands, a working compiled programming language, and a 3-stage cryptography CTF — all in pure vanilla mcfunction.
+A three-datapack Minecraft Java Edition system (26.1.2) that builds a fully interactive holographic computer terminal in-game: a 128×72 pixel display, a real operating system with 110-node filesystem, 33 shell commands, a working compiled programming language, and a 3-stage cryptography CTF - all in pure vanilla mcfunction.
 
 ---
 
@@ -39,7 +39,7 @@ Three datapacks work as one system:
    ```
    A holographic screen materializes. The boot animation plays.
 
-4. Interact via the Dialog UI — it opens automatically after boot, or use:
+4. Interact via the Dialog UI - it opens automatically after boot, or use:
    ```
    /dialog show @s helix_term:terminal
    ```
@@ -131,14 +131,14 @@ Source (.hx) → Lexer → Parser → Compiler → Bytecode → Stack VM → Out
 - Arrays with indexing
 - Structs with member access
 - String literals
-- `println()` — outputs to the holographic display
+- `println()` - outputs to the holographic display
 - Recursive function calls (depth-guarded to 32)
 
 ### Safety Guarantees
 - VM executes max **128 ops per game tick**, then yields via `schedule`
 - Lexer bounded to **200 iterations** per invocation
 - Scanner loops hard-capped (identifiers: 32 chars, strings: 128, numbers: 16 digits)
-- Call stack depth capped at **32** — graceful error on overflow
+- Call stack depth capped at **32** - graceful error on overflow
 - Programs limited to **1024 characters** source
 
 ### Example Programs (in `/home/operator/programs/`)
@@ -150,7 +150,7 @@ println(42);
 fn fib(n) { if (n < 2) { return n; } return fib(n-1) + fib(n-2); }
 println(fib(15));
 
-// lcg_test.hx — vault cracker tool
+// lcg_test.hx - vault cracker tool
 let x = 7;
 for (let i = 0; i < 5; i += 1) {
   x = (x * 5 + 3) % 97;
@@ -175,7 +175,7 @@ println(value)
 
 ## CTF: SABLE Containment Protocol (3 Stages)
 
-### Stage 1 — RECON (Easy)
+### Stage 1 - RECON (Easy)
 **Objective:** Gain access to secured audit logs and find the anomaly key.
 
 1. The auth log at `/var/log/auth.log` is locked
@@ -184,16 +184,16 @@ println(value)
 4. Read the log, find the key on the SUCCESS line
 5. Submit: `unlock fl4g_r3c0n_7842`
 
-### Stage 2 — CRYPTO (Medium)
+### Stage 2 - CRYPTO (Medium)
 **Objective:** Decode SABLE's encrypted directive.
 
 1. Run `unlock conf_k3y` to access `/etc/.containment/`
-2. Read `cipher_key.dat` — ciphertext is `aicufueemphfwm`
+2. Read `cipher_key.dat` - ciphertext is `aicufueemphfwm`
 3. The cipher is Vigenere, key is the kernel name (found in `/etc/axiom.conf` → `kernel_name=helix`)
 4. Decrypt: `(C - K + 26) mod 26` for each character
 5. Submit: `unlock terminatesable`
 
-### Stage 3 — EXPLOIT (Hard)
+### Stage 3 - EXPLOIT (Hard)
 **Objective:** Crack the vault access sequence using LCG mathematics.
 
 1. Read `/etc/.containment/seed.dat` for LCG parameters: seed=7, a=5, c=3, m=97
