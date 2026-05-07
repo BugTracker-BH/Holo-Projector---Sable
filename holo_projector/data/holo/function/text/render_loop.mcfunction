@@ -1,5 +1,6 @@
-# holo:text/render_loop — iterate chars of msg, render each (supports rainbow)
+# holo:text/render_loop - Iterate chars, bounded to 60 max
 execute if score #I holo.tmp >= #MSGLEN holo.tmp run return 0
+execute if score #I holo.tmp matches 60.. run return 0
 scoreboard players operation #J holo.tmp = #I holo.tmp
 scoreboard players add #J holo.tmp 1
 execute store result storage holo:m si int 1 run scoreboard players get #I holo.tmp
