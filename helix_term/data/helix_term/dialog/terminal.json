@@ -1,1 +1,8 @@
-{}
+{
+  "type": "minecraft:notice",
+  "title": {"text": ""},
+  "body": {
+    "type": "minecraft:plain_message",
+    "contents": {"text": ""}
+  }
+}
