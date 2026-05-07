@@ -1,0 +1,19 @@
+playsound minecraft:entity.firework_rocket.blast master @a ~ ~ ~ 1 1
+function holo:text/set_pixel {px:14, py:16, color:-65536}
+function holo:text/set_pixel {px:13, py:16, color:-32768}
+function holo:text/set_pixel {px:15, py:16, color:-32768}
+function holo:text/set_pixel {px:14, py:15, color:-32768}
+function holo:text/set_pixel {px:14, py:17, color:-32768}
+function holo:text/set_pixel {px:13, py:15, color:-256}
+function holo:text/set_pixel {px:15, py:15, color:-256}
+function holo:text/set_pixel {px:13, py:17, color:-256}
+function holo:text/set_pixel {px:15, py:17, color:-256}
+function holo:text/set_pixel {px:114, py:16, color:-65536}
+function holo:text/set_pixel {px:113, py:16, color:-32768}
+function holo:text/set_pixel {px:115, py:16, color:-32768}
+function holo:text/set_pixel {px:114, py:15, color:-32768}
+function holo:text/set_pixel {px:114, py:17, color:-32768}
+function holo:text/set_pixel {px:113, py:15, color:-256}
+function holo:text/set_pixel {px:115, py:15, color:-256}
+function holo:text/set_pixel {px:113, py:17, color:-256}
+function holo:text/set_pixel {px:115, py:17, color:-256}

@@ -1,0 +1,40 @@
+{
+  "criteria": {
+    "hit_cell": {
+      "trigger": "minecraft:player_hurt_entity",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "equipment": {
+                "mainhand": {
+                  "items": "minecraft:stick",
+                  "predicates": {
+                    "minecraft:custom_data": {
+                      "ttt_wand": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "minecraft:armor_stand",
+              "nbt": "{Tags:[\"ttt_cell_2\"]}"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "function": "helix:ttt/click_2"
+  }
+}
