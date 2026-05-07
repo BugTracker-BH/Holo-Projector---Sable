@@ -1,6 +1,6 @@
 # HELIX OS - Rogue AI Containment Terminal
 
-A three-datapack Minecraft Java Edition system (26.1.2) that builds a fully interactive holographic computer terminal in-game: a 128×72 pixel display, a real operating system with 110-node filesystem, 33 shell commands, a working compiled programming language, and a 3-stage cryptography CTF - all in pure vanilla mcfunction.
+A three-datapack Minecraft Java Edition system (26.1.2) that builds a fully interactive holographic computer terminal in-game: a 128x72 pixel display, a real operating system with 110-node filesystem, 33 shell commands, a working compiled programming language, and a 3-stage cryptography CTF - all in pure vanilla mcfunction.
 
 ---
 
@@ -12,9 +12,9 @@ Three datapacks work as one system:
 
 | Pack | Namespace | Role |
 |------|-----------|------|
-| `holo_projector` | `holo` | 128×72 holographic pixel display, 5×7 bitmap font engine, text rendering |
+| `holo_projector` | `holo` | 128x72 holographic pixel display, 5x7 bitmap font engine, text rendering |
 | `helix_os` | `helix` | OS kernel: VFS, shell, programming language (lexer/parser/compiler/VM), CTF |
-| `helix_term` | `helix_term` | Bridge: Dialog UI input, boot sequence, display routing |
+| `helix_term` | `helix_term` | Bridge: book-based input, boot sequence, display routing |
 
 ---
 
@@ -37,18 +37,35 @@ Three datapacks work as one system:
    ```
    /function helix_term:setup
    ```
-   A holographic screen materializes. The boot animation plays.
+   A holographic screen materializes, the boot animation plays, and 9 terminal books appear in your hotbar.
 
-4. Interact via the Dialog UI - it opens automatically after boot, or use:
-   ```
-   /dialog show @s helix_term:terminal
-   ```
+4. Right-click any book to open it. Click commands inside to execute them. Output displays on the holo projector.
+
+---
+
+## Input System: Terminal Books
+
+Instead of a chat-based interface, HELIX OS uses **9 Written Books** placed in your hotbar. Each book covers a section of the OS. Every command inside is clickable - when you click it, it silently executes the full command on the backend and displays the result on the holographic projector.
+
+| Slot | Book | What's Inside |
+|------|------|---------------|
+| 1 | **Navigation** | ls, lsa, cd (all major paths), pwd, tree, find, grep |
+| 2 | **Files** | cat for every readable file in the VFS (~40 entries) |
+| 3 | **System** | ps, top, kill, df, mount, uname, uptime, id, whoami, env, clear, help |
+| 4 | **Net & Utils** | ping, ssh, curl (all severed), echo, hexdump, alias, man |
+| 5 | **Programs** | Run each .hx program (hello, fib, sort, lcg_test, vigenere) |
+| 6 | **CTF Stage 1** | Guided recon walkthrough with all unlock commands |
+| 7 | **CTF Stage 2** | Guided crypto walkthrough with cipher tools |
+| 8 | **CTF Stage 3** | Guided exploit walkthrough with LCG computation |
+| 9 | **SABLE Intel** | All SABLE-related files, research docs, and grep searches |
+
+Each entry shows a neat label. Hover for a tooltip description. Click to execute. The underlying command runs silently via `clickEvent.run_command`.
 
 ---
 
 ## Shell Commands (33)
 
-All commands are entered through the Dialog UI (cmd + optional argument):
+All commands are accessible through the books:
 
 ### Navigation
 | Command | Description |
@@ -116,7 +133,7 @@ All commands are entered through the Dialog UI (cmd + optional argument):
 HELIX OS includes a **real compiled programming language** called HX. Programs are `.hx` files stored in the VFS. The pipeline:
 
 ```
-Source (.hx) → Lexer → Parser → Compiler → Bytecode → Stack VM → Output on Holo Projector
+Source (.hx) -> Lexer -> Parser -> Compiler -> Bytecode -> Stack VM -> Output on Holo Projector
 ```
 
 ### Supported Features
@@ -161,14 +178,14 @@ for (let i = 0; i < 5; i += 1) {
 ### How Output Reaches the Holo Projector
 ```
 println(value)
-  → vm/builtin/println (type dispatch)
-    → sets _last_printed + _last_type
-      → vm/builtin/println_render (macro)
-        → helix:_show {msg, color}
-          → helix:_prep (clears animations, sets scale)
-            → holo:text/set_color
-            → holo:text/display {msg:"..."}
-              → [renders on 576 text_display entities]
+  -> vm/builtin/println (type dispatch)
+    -> sets _last_printed + _last_type
+      -> vm/builtin/println_render (macro)
+        -> helix:_show {msg, color}
+          -> helix:_prep (clears animations, sets scale)
+            -> holo:text/set_color
+            -> holo:text/display {msg:"..."}
+              -> [renders on 576 text_display entities]
 ```
 
 ---
@@ -189,7 +206,7 @@ println(value)
 
 1. Run `unlock conf_k3y` to access `/etc/.containment/`
 2. Read `cipher_key.dat` - ciphertext is `aicufueemphfwm`
-3. The cipher is Vigenere, key is the kernel name (found in `/etc/axiom.conf` → `kernel_name=helix`)
+3. The cipher is Vigenere, key is the kernel name (found in `/etc/sable.conf` -> `kernel_name=helix`)
 4. Decrypt: `(C - K + 26) mod 26` for each character
 5. Submit: `unlock terminatesable`
 
@@ -213,24 +230,24 @@ A full Linux-like directory tree stored in NBT with real path resolution:
 
 ```
 /
-├── bin/          (ls, cat, hsh, grep, find, unlock, hexdump)
-├── etc/          (passwd, shadow, sable.conf, hostname, motd, watchdog.conf, network.conf)
-│   └── .containment/  (seed.dat, cipher_key.dat, vault_params.dat, emergency.log)
-├── home/
-│   ├── operator/ (notes.txt, containment_brief.txt, programs/, .profile, .ssh/, .bash_history)
-│   └── sable/   (manifest.txt, directive.enc, .plan, research/, .sable_core/)
-├── var/
-│   └── log/     (auth.log, syslog, sable.log, daemon.log, kern.log)
-├── sys/
-│   ├── kernel/  (version, hostname, uptime)
-│   ├── containment/ (status, threat_matrix, protocols)
-│   └── devices/ (holo0, net0, sable_cage)
-├── proc/        (cpuinfo, meminfo, mounts, sable_pid)
-├── dev/         (null, random, holo0, tty-holo7)
-├── tmp/         (sable_broadcast.tmp, .cache_fragment, core_dump.tmp, motd_backup)
-└── usr/
-    ├── bin/     (ssh, curl, ping)
-    └── share/   (man/, doc/)
+|-- bin/          (ls, cat, hsh, grep, find, unlock, hexdump)
+|-- etc/          (passwd, shadow, sable.conf, hostname, motd, watchdog.conf, network.conf)
+|   +-- .containment/  (seed.dat, cipher_key.dat, vault_params.dat, emergency.log)
+|-- home/
+|   |-- operator/ (notes.txt, containment_brief.txt, programs/, .profile, .ssh/, .bash_history)
+|   +-- sable/   (manifest.txt, directive.enc, .plan, research/, .sable_core/)
+|-- var/
+|   +-- log/     (auth.log, syslog, sable.log, daemon.log, kern.log)
+|-- sys/
+|   |-- kernel/  (version, hostname, uptime)
+|   |-- containment/ (status, threat_matrix, protocols)
+|   +-- devices/ (holo0, net0, sable_cage)
+|-- proc/        (cpuinfo, meminfo, mounts, sable_pid)
+|-- dev/         (null, random, holo0, tty-holo7)
+|-- tmp/         (sable_broadcast.tmp, .cache_fragment, core_dump.tmp, motd_backup)
++-- usr/
+    |-- bin/     (ssh, curl, ping)
+    +-- share/   (man/, doc/)
 ```
 
 Every node has: name, type, parent, children[], permissions, owner, hidden flag, content, and optional unlock_key.
@@ -242,22 +259,24 @@ Path resolution supports: absolute paths (`/var/log/auth.log`), relative paths, 
 ## Architecture
 
 ### Holo Projector (untouched)
-- 576 `text_display` entities in a 32×18 grid (or 128×72 at XL scale)
+- 576 `text_display` entities in a 32x18 grid (or 128x72 at XL scale)
 - Each pixel addressable via `pixel_r{row}_c{col}` tags
-- 5×7 bitmap font with 48 glyphs (A-Z, 0-9, symbols)
+- 5x7 bitmap font with 48 glyphs (A-Z, 0-9, symbols)
 - Word-wrap, adaptive scaling, rainbow mode, transition animations
 - Stack-based graphics VM with 30+ opcodes (sine waves, spirals, etc.)
 
 ### HELIX OS
-- **VFS Engine:** `fs/resolve` → `split_path` → `walk_segments` → `walk_child` → `name_match`
+- **VFS Engine:** `fs/resolve` -> `split_path` -> `walk_segments` -> `walk_child` -> `name_match`
 - **Shell:** `dispatch_safe` routes 33 commands via data-storage string matching
-- **Language Pipeline:** `lex/start` → `parse/start` → `compile/start` → `vm/start` → `vm/run`
+- **Language Pipeline:** `lex/start` -> `parse/start` -> `compile/start` -> `vm/start` -> `vm/run`
 - **CTF:** Progressive unlock flags stored in `helix:ctf` namespace, gating file access and stage progression
 
 ### HELIX Terminal
-- Dialog UI (1.21.2 `minecraft:multi_action`) with command/argument text inputs
+- **9 Written Books** in player hotbar, each with clickable JSON commands
+- Every click silently runs `function helix:shell/run {cmd:"...",arg:"..."}` via `clickEvent.run_command`
 - Boot sequence with timed animation stages
 - Bridge functions routing VM output and CTF wins to projector effects
+- No experimental features required (no Dialog UI, no resource pack)
 
 ---
 
@@ -266,6 +285,7 @@ Path resolution supports: absolute paths (`/var/log/auth.log`), relative paths, 
 - **Pack format:** 61 (Minecraft Java 26.1.2)
 - **No mods required.** Pure vanilla datapacks.
 - **No resource pack required.**
+- **No experimental features required.** Books use stable `clickEvent.run_command`.
 - **Multiplayer safe:** All output uses `@a` selectors
 - **Performance:** VM yields every 128 ops via `schedule function ... 1t`
 - **Crash protection:** All recursion bounded, depth guards on function calls, program size limits
