@@ -1,14 +1,13 @@
-# helix_term:boot/finale — Rainbow greeting with smart scale fallback so text always fits
+# helix_term:boot/finale - Rainbow greeting at scale 2
 scoreboard players set #LIVE_MODE holo.state 0
 scoreboard players set #PENDING_MODE holo.state 0
 scoreboard players set #TRANSITIONING holo.state 0
 scoreboard players set #WRAP_ERROR holo.tmp 0
 scoreboard players set #RAINBOW holo.state 1
 scoreboard players set #RAINBOW_OFFSET holo.v 0
-data modify storage helix:shell msg set value "Helix OS is Ready!"
-data modify storage helix:shell color set value "YELLOW"
-function helix:_smart_scale
-function holo:text/display {msg:"Helix OS is Ready!"}
+scoreboard players set #FORCED_SCALE holo.v 2
+data modify storage holo:m msg set value "Helix OS is Ready!"
+function holo:text/render_from_storage
 playsound minecraft:ui.toast.challenge_complete master @a ~ ~ ~ 1 1
 playsound minecraft:block.beacon.activate master @a ~ ~ ~ 1 1
 playsound minecraft:entity.firework_rocket.launch master @a ~ ~ ~ 0.6 1.4
