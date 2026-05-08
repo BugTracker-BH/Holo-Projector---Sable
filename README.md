@@ -145,6 +145,187 @@ VM executes max 128 ops/tick, yields between ticks. Call depth capped at 32.
 
 ---
 
+## Full Walkthrough - 100% Completion (All Commands in Order)
+
+### Setup
+```
+/function helix_term:setup
+```
+
+### Phase 1: Orientation
+```
+/function helix:shell/run {cmd:"whoami",arg:""}
+/function helix:shell/run {cmd:"id",arg:""}
+/function helix:shell/run {cmd:"uname",arg:""}
+/function helix:shell/run {cmd:"uptime",arg:""}
+/function helix:shell/run {cmd:"pwd",arg:""}
+/function helix:shell/run {cmd:"env",arg:""}
+```
+
+### Phase 2: Read Your Briefing
+```
+/function helix:shell/run {cmd:"ls",arg:""}
+/function helix:shell/run {cmd:"lsa",arg:""}
+/function helix:shell/run {cmd:"cat",arg:"/home/operator/notes.txt"}
+/function helix:shell/run {cmd:"cat",arg:"/home/operator/containment_brief.txt"}
+```
+
+### Phase 3: Explore the System
+```
+/function helix:shell/run {cmd:"cd",arg:"/"}
+/function helix:shell/run {cmd:"ls",arg:""}
+/function helix:shell/run {cmd:"cat",arg:"/etc/motd"}
+/function helix:shell/run {cmd:"cat",arg:"/sys/containment/status"}
+/function helix:shell/run {cmd:"cat",arg:"/sys/containment/threat_matrix"}
+/function helix:shell/run {cmd:"top",arg:""}
+/function helix:shell/run {cmd:"cat",arg:"/proc/sable_pid"}
+/function helix:shell/run {cmd:"ping",arg:""}
+/function helix:shell/run {cmd:"ssh",arg:""}
+```
+
+### Phase 4: Explore Logs
+```
+/function helix:shell/run {cmd:"cd",arg:"/var/log"}
+/function helix:shell/run {cmd:"ls",arg:""}
+/function helix:shell/run {cmd:"cat",arg:"/var/log/syslog"}
+/function helix:shell/run {cmd:"cat",arg:"/var/log/sable.log"}
+/function helix:shell/run {cmd:"cat",arg:"/var/log/kern.log"}
+```
+
+### Phase 5: Investigate SABLE
+```
+/function helix:shell/run {cmd:"cd",arg:"/home/sable"}
+/function helix:shell/run {cmd:"ls",arg:""}
+/function helix:shell/run {cmd:"lsa",arg:""}
+/function helix:shell/run {cmd:"cat",arg:"/home/sable/manifest.txt"}
+/function helix:shell/run {cmd:"cat",arg:"/home/sable/directive.enc"}
+/function helix:shell/run {cmd:"cat",arg:"/home/sable/.plan"}
+/function helix:shell/run {cmd:"cd",arg:"/home/sable/research"}
+/function helix:shell/run {cmd:"ls",arg:""}
+/function helix:shell/run {cmd:"cat",arg:"/home/sable/research/consciousness.txt"}
+```
+
+### Phase 6: Find Hidden Clues
+```
+/function helix:shell/run {cmd:"cd",arg:"/tmp"}
+/function helix:shell/run {cmd:"lsa",arg:""}
+/function helix:shell/run {cmd:"cat",arg:"/tmp/.cache_fragment"}
+/function helix:shell/run {cmd:"cat",arg:"/tmp/sable_broadcast.tmp"}
+/function helix:shell/run {cmd:"cat",arg:"/etc/sable.conf"}
+```
+
+### Phase 7: Search
+```
+/function helix:shell/run {cmd:"find",arg:"auth.log"}
+/function helix:shell/run {cmd:"find",arg:"seed.dat"}
+/function helix:shell/run {cmd:"grep",arg:"SABLE"}
+/function helix:shell/run {cmd:"grep",arg:"vault"}
+/function helix:shell/run {cmd:"grep",arg:"cipher"}
+```
+
+### Phase 8: System Commands
+```
+/function helix:shell/run {cmd:"ps",arg:""}
+/function helix:shell/run {cmd:"df",arg:""}
+/function helix:shell/run {cmd:"cat",arg:"/proc/cpuinfo"}
+/function helix:shell/run {cmd:"cat",arg:"/proc/meminfo"}
+/function helix:shell/run {cmd:"cat",arg:"/dev/random"}
+/function helix:shell/run {cmd:"hexdump",arg:""}
+/function helix:shell/run {cmd:"cat",arg:"/usr/share/doc/ctf_rules.txt"}
+```
+
+### CTF Stage 1 - RECON
+
+**How to find the info:** The operator's bash history reveals the credential. The auth log contains the anomaly key on a SUCCESS line.
+
+```
+/function helix:shell/run {cmd:"cat",arg:"/home/operator/.bash_history"}
+```
+> Shows previous commands including `unlock sys_r3ad`
+
+```
+/function helix:shell/run {cmd:"unlock",arg:"sys_r3ad"}
+```
+> Unlocks the auth log
+
+```
+/function helix:shell/run {cmd:"cat",arg:"/var/log/auth.log"}
+```
+> Shows: SUCCESS root key=fl4g_r3c0n_7842
+
+```
+/function helix:shell/run {cmd:"unlock",arg:"fl4g_r3c0n_7842"}
+```
+> STAGE 1 COMPLETE - Fireworks
+
+### CTF Stage 2 - CRYPTO
+
+**How to find the info:** The /tmp/.cache_fragment hints at conf_k3y. The cipher_key.dat has the ciphertext. The sable.conf has kernel_name=helix (the Vigenere key). cipher_theory.txt explains the formula.
+
+```
+/function helix:shell/run {cmd:"unlock",arg:"conf_k3y"}
+```
+> Unlocks /etc/.containment/
+
+```
+/function helix:shell/run {cmd:"cat",arg:"/etc/.containment/cipher_key.dat"}
+```
+> Ciphertext: aicufueemphfwm, Algorithm: Vigenere, Key: kernel_name
+
+```
+/function helix:shell/run {cmd:"cat",arg:"/etc/sable.conf"}
+```
+> kernel_name=helix (the Vigenere key)
+
+```
+/function helix:shell/run {cmd:"cat",arg:"/home/sable/research/cipher_theory.txt"}
+```
+> Decrypt: P = (C - K + 26) mod 26
+
+**Decryption:** aicufueemphfwm with key "helix" = terminatesable
+
+```
+/function helix:shell/run {cmd:"unlock",arg:"terminatesable"}
+```
+> STAGE 2 COMPLETE - Fireworks
+
+### CTF Stage 3 - EXPLOIT
+
+**How to find the info:** seed.dat and vault_params.dat give the LCG parameters. lcg_notes.txt confirms from SABLE's perspective. Compute x(n+1) = (5*x + 3) % 97 for 5 iterations from seed 7, concat x3+x4+x5.
+
+```
+/function helix:shell/run {cmd:"cat",arg:"/etc/.containment/seed.dat"}
+```
+> LCG: seed=7, a=5, c=3, m=97, 5 iterations
+
+```
+/function helix:shell/run {cmd:"cat",arg:"/etc/.containment/vault_params.dat"}
+```
+> Concat x3+x4+x5, no spaces
+
+```
+/function helix:shell/run {cmd:"cat",arg:"/home/sable/research/lcg_notes.txt"}
+```
+> Confirms parameters
+
+**Computation:** x1=38, x2=96, x3=95, x4=90, x5=65. Answer: 959065
+
+```
+/function helix:shell/run {cmd:"unlock",arg:"959065"}
+```
+> ALL STAGES COMPLETE - SABLE PERMANENTLY CONTAINED - Fireworks
+
+### Victory Lap
+```
+/function helix:shell/run {cmd:"cat",arg:"/home/sable/.sable_core/self.bin"}
+/function helix:shell/run {cmd:"cat",arg:"/tmp/motd_backup"}
+/function helix:shell/run {cmd:"echo",arg:"SABLE is finished"}
+/function helix:shell/run {cmd:"clear",arg:""}
+/function holo:projector/despawn
+```
+
+---
+
 ## Uninstall
 
 Delete the three datapack folders and `/reload`.
