@@ -1,6 +1,6 @@
-# holo:text/wrap_loop - Iterate chars, bounded to 120 max
+# holo:text/wrap_loop - Iterate chars for word-wrap (bounded 200)
 execute if score #I holo.tmp >= #MSGLEN holo.tmp run return 0
-execute if score #I holo.tmp matches 120.. run return 0
+execute if score #I holo.tmp matches 200.. run return 0
 scoreboard players operation #J holo.tmp = #I holo.tmp
 scoreboard players add #J holo.tmp 1
 execute store result storage holo:m si int 1 run scoreboard players get #I holo.tmp
