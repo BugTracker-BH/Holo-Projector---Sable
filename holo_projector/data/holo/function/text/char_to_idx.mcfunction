@@ -73,3 +73,7 @@ execute if data storage holo:m {char:"/"} run scoreboard players set #CHAR_IDX h
 execute if data storage holo:m {char:"-"} run scoreboard players set #CHAR_IDX holo.tmp 45
 execute if data storage holo:m {char:"_"} run scoreboard players set #CHAR_IDX holo.tmp 46
 execute if data storage holo:m {char:"|"} run scoreboard players set #CHAR_IDX holo.tmp 47
+execute if data storage holo:m {char:"="} run scoreboard players set #CHAR_IDX holo.tmp 48
+execute if data storage holo:m {char:"("} run scoreboard players set #CHAR_IDX holo.tmp 49
+execute if data storage holo:m {char:")"} run scoreboard players set #CHAR_IDX holo.tmp 50
+execute if data storage holo:m {char:"+"} run scoreboard players set #CHAR_IDX holo.tmp 51
