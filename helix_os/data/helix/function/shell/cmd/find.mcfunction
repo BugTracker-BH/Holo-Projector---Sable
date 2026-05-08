@@ -8,34 +8,34 @@ execute if data storage helix:vm {_arg1:"passwd"} run function helix:_show {msg:
 execute if data storage helix:vm {_arg1:"passwd"} run return 0
 execute if data storage helix:vm {_arg1:"shadow"} run function helix:_show {msg:"/etc/shadow",color:"LIME"}
 execute if data storage helix:vm {_arg1:"shadow"} run return 0
-execute if data storage helix:vm {_arg1:"seed.dat"} run function helix:_show {msg:"/etc/.containment/seed.dat",color:"LIME"}
+execute if data storage helix:vm {_arg1:"seed.dat"} run function helix:_show {msg:".containment/seed.dat",color:"LIME"}
 execute if data storage helix:vm {_arg1:"seed.dat"} run return 0
-execute if data storage helix:vm {_arg1:"directive.enc"} run function helix:_show {msg:"/home/sable/directive.enc",color:"LIME"}
+execute if data storage helix:vm {_arg1:"directive.enc"} run function helix:_show {msg:"sable/directive.enc",color:"LIME"}
 execute if data storage helix:vm {_arg1:"directive.enc"} run return 0
 execute if data storage helix:vm {_arg1:".plan"} run function helix:_show {msg:"/home/sable/.plan",color:"LIME"}
 execute if data storage helix:vm {_arg1:".plan"} run return 0
-execute if data storage helix:vm {_arg1:"vault_params.dat"} run function helix:_show {msg:"/etc/.containment/vault_params.dat",color:"LIME"}
+execute if data storage helix:vm {_arg1:"vault_params.dat"} run function helix:_show {msg:".containment/vault_params",color:"LIME"}
 execute if data storage helix:vm {_arg1:"vault_params.dat"} run return 0
 execute if data storage helix:vm {_arg1:"sable.conf"} run function helix:_show {msg:"/etc/sable.conf",color:"LIME"}
 execute if data storage helix:vm {_arg1:"sable.conf"} run return 0
-execute if data storage helix:vm {_arg1:"cipher_key.dat"} run function helix:_show {msg:"/etc/.containment/cipher_key.dat",color:"LIME"}
+execute if data storage helix:vm {_arg1:"cipher_key.dat"} run function helix:_show {msg:".containment/cipher_key",color:"LIME"}
 execute if data storage helix:vm {_arg1:"cipher_key.dat"} run return 0
-execute if data storage helix:vm {_arg1:"manifest.txt"} run function helix:_show {msg:"/home/sable/manifest.txt",color:"LIME"}
+execute if data storage helix:vm {_arg1:"manifest.txt"} run function helix:_show {msg:"sable/manifest.txt",color:"LIME"}
 execute if data storage helix:vm {_arg1:"manifest.txt"} run return 0
-execute if data storage helix:vm {_arg1:"notes.txt"} run function helix:_show {msg:"/home/operator/notes.txt",color:"LIME"}
+execute if data storage helix:vm {_arg1:"notes.txt"} run function helix:_show {msg:"operator/notes.txt",color:"LIME"}
 execute if data storage helix:vm {_arg1:"notes.txt"} run return 0
-execute if data storage helix:vm {_arg1:".bash_history"} run function helix:_show {msg:"/home/operator/.bash_history",color:"LIME"}
+execute if data storage helix:vm {_arg1:".bash_history"} run function helix:_show {msg:"operator/.bash_history",color:"LIME"}
 execute if data storage helix:vm {_arg1:".bash_history"} run return 0
-execute if data storage helix:vm {_arg1:"lcg_notes.txt"} run function helix:_show {msg:"/home/sable/research/lcg_notes.txt",color:"LIME"}
+execute if data storage helix:vm {_arg1:"lcg_notes.txt"} run function helix:_show {msg:"sable/research/lcg_notes",color:"LIME"}
 execute if data storage helix:vm {_arg1:"lcg_notes.txt"} run return 0
 execute if data storage helix:vm {_arg1:"sable.log"} run function helix:_show {msg:"/var/log/sable.log",color:"LIME"}
 execute if data storage helix:vm {_arg1:"sable.log"} run return 0
-execute if data storage helix:vm {_arg1:"vault.key"} run function helix:_show {msg:"/home/sable/.sable_core/vault.key",color:"LIME"}
+execute if data storage helix:vm {_arg1:"vault.key"} run function helix:_show {msg:"sable/.sable_core/vault",color:"LIME"}
 execute if data storage helix:vm {_arg1:"vault.key"} run return 0
-execute if data storage helix:vm {_arg1:"ctf_rules.txt"} run function helix:_show {msg:"/usr/share/doc/ctf_rules.txt",color:"LIME"}
+execute if data storage helix:vm {_arg1:"ctf_rules.txt"} run function helix:_show {msg:"share/doc/ctf_rules",color:"LIME"}
 execute if data storage helix:vm {_arg1:"ctf_rules.txt"} run return 0
-execute if data storage helix:vm {_arg1:"containment_guide.txt"} run function helix:_show {msg:"/usr/share/doc/containment_guide.txt",color:"LIME"}
+execute if data storage helix:vm {_arg1:"containment_guide.txt"} run function helix:_show {msg:"usr/share/doc/guide",color:"LIME"}
 execute if data storage helix:vm {_arg1:"containment_guide.txt"} run return 0
-execute if data storage helix:vm {_arg1:"emergency.log"} run function helix:_show {msg:"/etc/.containment/emergency.log",color:"LIME"}
+execute if data storage helix:vm {_arg1:"emergency.log"} run function helix:_show {msg:".containment/emergency",color:"LIME"}
 execute if data storage helix:vm {_arg1:"emergency.log"} run return 0
 function helix:_show {msg:"no matches",color:"GRAY"}
