@@ -1,13 +1,11 @@
-# helix_term:boot/finale - Rainbow greeting at scale 3
+# helix_term:boot/finale - Rainbow 2-line greeting
 scoreboard players set #LIVE_MODE holo.state 0
 scoreboard players set #PENDING_MODE holo.state 0
 scoreboard players set #TRANSITIONING holo.state 0
 scoreboard players set #WRAP_ERROR holo.tmp 0
 scoreboard players set #RAINBOW holo.state 1
 scoreboard players set #RAINBOW_OFFSET holo.v 0
-scoreboard players set #FORCED_SCALE holo.v 3
-data modify storage holo:m msg set value "Ready when you are!"
-function holo:text/render_from_storage
+function helix_term:boot/finale_render
 playsound minecraft:ui.toast.challenge_complete master @a ~ ~ ~ 1 1
 playsound minecraft:block.beacon.activate master @a ~ ~ ~ 1 1
 playsound minecraft:entity.firework_rocket.launch master @a ~ ~ ~ 0.6 1.4

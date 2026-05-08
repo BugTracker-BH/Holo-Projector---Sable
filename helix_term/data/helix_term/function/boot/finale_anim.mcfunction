@@ -1,7 +1,5 @@
-# helix_term:boot/finale_anim - Rainbow cycle
+# helix_term:boot/finale_anim - Rainbow cycle, re-render 2-line greeting
 execute if score #RAINBOW holo.state matches 0 run return 0
 scoreboard players add #RAINBOW_OFFSET holo.v 1
-scoreboard players set #FORCED_SCALE holo.v 3
-data modify storage holo:m msg set value "Ready when you are!"
-function holo:text/render_from_storage
+function helix_term:boot/finale_render
 schedule function helix_term:boot/finale_anim 3t
