@@ -6,4 +6,4 @@ execute if score helix _resolved_node matches -1 run function helix:_show {msg:"
 execute if score helix _resolved_node matches -1 run return 0
 scoreboard players operation helix cwd = helix _resolved_node
 data modify storage helix:shell cwd set from storage helix:vm _arg1
-function helix:_show {msg:"OK",color:"GREEN"}
+function helix:_show {msg:"200 OK",color:"GREEN"}

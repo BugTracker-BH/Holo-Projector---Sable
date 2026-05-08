@@ -5,7 +5,7 @@ execute if data storage helix:vm {_arg1:"/etc/shadow"} run function helix:_show 
 execute if data storage helix:vm {_arg1:"/etc/shadow"} run return 0
 execute if data storage helix:vm {_arg1:"/etc/sable.conf"} run function helix:_show {msg:"version=2.7.1 status=CONTAINED kernel_name=helix vault_algo=lcg cipher=vigenere",color:"WHITE"}
 execute if data storage helix:vm {_arg1:"/etc/sable.conf"} run return 0
-execute if data storage helix:vm {_arg1:"/etc/hostname"} run function helix:_show {msg:"helixnode7",color:"WHITE"}
+execute if data storage helix:vm {_arg1:"/etc/hostname"} run function helix:_show {msg:"HELIXNODE7",color:"WHITE"}
 execute if data storage helix:vm {_arg1:"/etc/hostname"} run return 0
 execute if data storage helix:vm {_arg1:"/etc/motd"} run function helix:_show {msg:"WARNING: SABLE CONTAINMENT ACTIVE Threat: CRITICAL",color:"YELLOW"}
 execute if data storage helix:vm {_arg1:"/etc/motd"} run return 0

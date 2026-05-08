@@ -8,7 +8,7 @@ execute if data storage helix:vm {_arg1:"passwd"} run function helix:_show {msg:
 execute if data storage helix:vm {_arg1:"passwd"} run return 0
 execute if data storage helix:vm {_arg1:"shadow"} run function helix:_show {msg:"/etc/shadow",color:"LIME"}
 execute if data storage helix:vm {_arg1:"shadow"} run return 0
-execute if data storage helix:vm {_arg1:"seed.dat"} run function helix:_show {msg:".containment/seed.dat",color:"LIME"}
+execute if data storage helix:vm {_arg1:"seed.dat"} run function helix:_show {msg:"FOUND IN CONTAINMENT",color:"LIME"}
 execute if data storage helix:vm {_arg1:"seed.dat"} run return 0
 execute if data storage helix:vm {_arg1:"directive.enc"} run function helix:_show {msg:"sable/directive.enc",color:"LIME"}
 execute if data storage helix:vm {_arg1:"directive.enc"} run return 0
