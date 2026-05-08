@@ -1,12 +1,12 @@
-# helix_term:boot/finale - Rainbow greeting at scale 2
+# helix_term:boot/finale - Rainbow greeting at scale 3, short enough to fit
 scoreboard players set #LIVE_MODE holo.state 0
 scoreboard players set #PENDING_MODE holo.state 0
 scoreboard players set #TRANSITIONING holo.state 0
 scoreboard players set #WRAP_ERROR holo.tmp 0
 scoreboard players set #RAINBOW holo.state 1
 scoreboard players set #RAINBOW_OFFSET holo.v 0
-scoreboard players set #FORCED_SCALE holo.v 2
-data modify storage holo:m msg set value "Helix OS is Ready!"
+scoreboard players set #FORCED_SCALE holo.v 3
+data modify storage holo:m msg set value "OS Ready!"
 function holo:text/render_from_storage
 playsound minecraft:ui.toast.challenge_complete master @a ~ ~ ~ 1 1
 playsound minecraft:block.beacon.activate master @a ~ ~ ~ 1 1
