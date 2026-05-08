@@ -1,0 +1,25 @@
+# helix_term:bridge/fw_corners_a - First burst frame: 4 corners, inner ring
+# Top-left corner (around 4,3)
+function holo:text/set_pixel {px:4, py:3, color:-65536}
+function holo:text/set_pixel {px:3, py:3, color:-256}
+function holo:text/set_pixel {px:5, py:3, color:-256}
+function holo:text/set_pixel {px:4, py:2, color:-16711936}
+function holo:text/set_pixel {px:4, py:4, color:-16711936}
+# Top-right corner (around 27,3)
+function holo:text/set_pixel {px:27, py:3, color:-16776961}
+function holo:text/set_pixel {px:26, py:3, color:-65281}
+function holo:text/set_pixel {px:28, py:3, color:-65281}
+function holo:text/set_pixel {px:27, py:2, color:-256}
+function holo:text/set_pixel {px:27, py:4, color:-256}
+# Bottom-left corner (around 4,14)
+function holo:text/set_pixel {px:4, py:14, color:-16711936}
+function holo:text/set_pixel {px:3, py:14, color:-16711681}
+function holo:text/set_pixel {px:5, py:14, color:-16711681}
+function holo:text/set_pixel {px:4, py:13, color:-65536}
+function holo:text/set_pixel {px:4, py:15, color:-65536}
+# Bottom-right corner (around 27,14)
+function holo:text/set_pixel {px:27, py:14, color:-256}
+function holo:text/set_pixel {px:26, py:14, color:-65536}
+function holo:text/set_pixel {px:28, py:14, color:-65536}
+function holo:text/set_pixel {px:27, py:13, color:-65281}
+function holo:text/set_pixel {px:27, py:15, color:-65281}

@@ -1,8 +1,5 @@
-scoreboard players set helix _fw_stage 3
+# helix_term:bridge/ctf_hard_win - CTF 3 solved, start fireworks loop
 scoreboard players set helix _fw_looping 1
-function holo:text/set_scale {scale:0}
-function holo:text/set_color {color:"GOLD"}
-function holo:text/display {msg:"CTF LEVEL 3 SOLVED"}
 playsound minecraft:entity.ender_dragon.death master @a ~ ~ ~ 0.5 1
 playsound minecraft:ui.toast.challenge_complete master @a ~ ~ ~ 1 1
 function helix_term:bridge/fireworks_burst
