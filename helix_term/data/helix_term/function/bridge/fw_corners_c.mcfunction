@@ -1,22 +1,30 @@
-# helix_term:bridge/fw_corners_c - Third burst: outer sparks
+# helix_term:bridge/fw_corners_c - Burst frame 3: furthest sparks at 4 corners
 execute if score helix _fw_looping matches 0 run return 0
-# Top-left outer
-function holo:text/set_pixel {px:1, py:1, color:-30720}
-function holo:text/set_pixel {px:7, py:1, color:-256}
-function holo:text/set_pixel {px:1, py:5, color:-16711936}
-function holo:text/set_pixel {px:7, py:5, color:-65536}
-# Top-right outer
-function holo:text/set_pixel {px:24, py:1, color:-16711936}
-function holo:text/set_pixel {px:30, py:1, color:-65281}
-function holo:text/set_pixel {px:24, py:5, color:-256}
-function holo:text/set_pixel {px:30, py:5, color:-65536}
-# Bottom-left outer
-function holo:text/set_pixel {px:1, py:12, color:-65281}
-function holo:text/set_pixel {px:7, py:12, color:-16776961}
-function holo:text/set_pixel {px:1, py:16, color:-256}
-function holo:text/set_pixel {px:7, py:16, color:-30720}
-# Bottom-right outer
-function holo:text/set_pixel {px:24, py:12, color:-256}
-function holo:text/set_pixel {px:30, py:12, color:-65536}
-function holo:text/set_pixel {px:24, py:16, color:-16711681}
-function holo:text/set_pixel {px:30, py:16, color:-65281}
+# Top-left outermost (center 5,4)
+function holo:text/set_pixel {px:2, py:1, color:-30720}
+function holo:text/set_pixel {px:8, py:1, color:-256}
+function holo:text/set_pixel {px:2, py:7, color:-16711936}
+function holo:text/set_pixel {px:8, py:7, color:-65536}
+function holo:text/set_pixel {px:5, py:1, color:-65281}
+function holo:text/set_pixel {px:5, py:7, color:-16711681}
+# Top-right outermost (center 26,4)
+function holo:text/set_pixel {px:23, py:1, color:-16711936}
+function holo:text/set_pixel {px:29, py:1, color:-65281}
+function holo:text/set_pixel {px:23, py:7, color:-256}
+function holo:text/set_pixel {px:29, py:7, color:-65536}
+function holo:text/set_pixel {px:26, py:1, color:-30720}
+function holo:text/set_pixel {px:26, py:7, color:-16776961}
+# Bottom-left outermost (center 5,13)
+function holo:text/set_pixel {px:2, py:10, color:-65281}
+function holo:text/set_pixel {px:8, py:10, color:-16776961}
+function holo:text/set_pixel {px:2, py:16, color:-256}
+function holo:text/set_pixel {px:8, py:16, color:-30720}
+function holo:text/set_pixel {px:5, py:10, color:-16711936}
+function holo:text/set_pixel {px:5, py:16, color:-65536}
+# Bottom-right outermost (center 26,13)
+function holo:text/set_pixel {px:23, py:10, color:-256}
+function holo:text/set_pixel {px:29, py:10, color:-65536}
+function holo:text/set_pixel {px:23, py:16, color:-16711681}
+function holo:text/set_pixel {px:29, py:16, color:-65281}
+function holo:text/set_pixel {px:26, py:10, color:-30720}
+function holo:text/set_pixel {px:26, py:16, color:-256}
