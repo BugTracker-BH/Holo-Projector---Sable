@@ -20,7 +20,11 @@ function holo:text/wrap_reset
 function holo:text/wrap_loop
 function holo:text/wrap_flush_done
 
-execute if score #WRAP_ERROR holo.tmp matches 1 run function holo:text/show_error
+# FALLBACK: a single word longer than the per-line budget would otherwise abort
+# rendering (kills whoami/pwd/find/etc on the holo). Re-render as a single line
+# with auto-scale so it always shows. _show restores #FORCED_SCALE right after.
+execute if score #WRAP_ERROR holo.tmp matches 1 run scoreboard players set #FORCED_SCALE holo.v 0
+execute if score #WRAP_ERROR holo.tmp matches 1 run function holo:text/render_single_line
 execute if score #WRAP_ERROR holo.tmp matches 1 run return 0
 
 execute store result score #NUMLINES holo.tmp run data get storage holo:m lines
