@@ -1,4 +1,8 @@
 # helix:shell/dispatch_safe — Route command to handler
+execute if score helix hack_lockout matches 1 run tellraw @a [{"text":"[SABLE] ","color":"red","bold":true},{"text":"TERMINAL OFFLINE","color":"red"}]
+execute if score helix hack_lockout matches 1 run return 0
+execute if score helix hack_active matches 1 run tellraw @a [{"text":"[SABLE] ","color":"red","bold":true},{"text":"INPUT INTERCEPTED","color":"red"}]
+execute if score helix hack_active matches 1 run return 0
 scoreboard players set helix _cmd_found 0
 execute if data storage helix:vm {_cmd:"ls"} run scoreboard players set helix _cmd_found 1
 execute if data storage helix:vm {_cmd:"ls"} run function helix:shell/cmd/ls

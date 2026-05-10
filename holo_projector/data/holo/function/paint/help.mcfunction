@@ -1,0 +1,12 @@
+# holo:paint/help — list available paint commands
+tellraw @a [{"text":"\n=== HOLO PAINT ===\n","color":"light_purple","bold":true}]
+tellraw @a [{"text":"Colors (run any of):","color":"gray"}]
+tellraw @a [{"text":"  /function holo:paint/","color":"dark_gray"},{"text":"red","color":"red"},{"text":"  ","color":"dark_gray"},{"text":"orange","color":"gold"},{"text":"  ","color":"dark_gray"},{"text":"yellow","color":"yellow"},{"text":"  ","color":"dark_gray"},{"text":"green","color":"green"},{"text":"  ","color":"dark_gray"},{"text":"cyan","color":"aqua"},{"text":"  ","color":"dark_gray"},{"text":"blue","color":"blue"}]
+tellraw @a [{"text":"  /function holo:paint/","color":"dark_gray"},{"text":"purple","color":"dark_purple"},{"text":"  ","color":"dark_gray"},{"text":"pink","color":"light_purple"},{"text":"  ","color":"dark_gray"},{"text":"magenta","color":"light_purple"},{"text":"  ","color":"dark_gray"},{"text":"white","color":"white"},{"text":"  ","color":"dark_gray"},{"text":"gray","color":"gray"},{"text":"  ","color":"dark_gray"},{"text":"black","color":"dark_gray"}]
+tellraw @a [{"text":"\nBrush size:","color":"gray"}]
+tellraw @a [{"text":"  /function holo:paint/","color":"dark_gray"},{"text":"size_1","color":"yellow"},{"text":"   ","color":"dark_gray"},{"text":"size_3","color":"yellow"},{"text":"   ","color":"dark_gray"},{"text":"size_5","color":"yellow"}]
+tellraw @a [{"text":"\nActions:","color":"gray"}]
+tellraw @a [{"text":"  /function holo:paint/","color":"dark_gray"},{"text":"clear","color":"yellow"},{"text":"   wipe canvas","color":"dark_gray"}]
+tellraw @a [{"text":"  /function holo:paint/","color":"dark_gray"},{"text":"help","color":"yellow"},{"text":"    show this help","color":"dark_gray"}]
+tellraw @a [{"text":"  /function holo:paint/","color":"dark_gray"},{"text":"stop","color":"red"},{"text":"    end paint mode","color":"dark_gray"}]
+tellraw @a [{"text":"\nLeft-click the projector to paint, right-click to erase.\n","color":"gray","italic":true}]
